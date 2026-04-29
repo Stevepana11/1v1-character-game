@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1v1 Character Battle Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Menu Screen -->
+        <div id="menuScreen" class="screen active">
+            <h1>⚔️ 1v1 Character Battle</h1>
+            <div class="button-group">
+                <button onclick="showCreateRoom()" class="btn btn-primary">Create Room</button>
+                <button onclick="showJoinRoom()" class="btn btn-primary">Join Room</button>
+            </div>
+        </div>
+
+        <!-- Create Room Screen -->
+        <div id="createRoomScreen" class="screen">
+            <h2>Create Game Room</h2>
+            <div class="form-group">
+                <label>Username:</label>
+                <input type="text" id="createUsername" placeholder="Enter your username" maxlength="20">
+            </div>
+            <div class="form-group">
+                <label>Select Character:</label>
+                <div class="character-grid">
+                    <div class="character-card" onclick="selectCharacter('warrior', this)">
+                        <h3>⚔️ Warrior</h3>
+                        <p><strong>Health:</strong> 150</p>
+                        <p><strong>Speed:</strong> 1x</p>
+                        <p><small>Tanky with strong attacks</small></p>
+                    </div>
+                    <div class="character-card" onclick="selectCharacter('mage', this)">
+                        <h3>🔥 Mage</h3>
+                        <p><strong>Health:</strong> 100</p>
+                        <p><strong>Speed:</strong> 1.5x</p>
+                        <p><small>High damage spells</small></p>
+                    </div>
+                    <div class="character-card" onclick="selectCharacter('archer', this)">
+                        <h3>🏹 Archer</h3>
+                        <p><strong>Health:</strong> 120</p>
+                        <p><strong>Speed:</strong> 1.3x</p>
+                        <p><small>Balanced fighter</small></p>
+                    </div>
+                    <div class="character-card" onclick="selectCharacter('rogue', this)">
+                        <h3>🗡️ Rogue</h3>
+                        <p><strong>Health:</strong> 110</p>
+                        <p><strong>Speed:</strong> 2x</p>
+                        <p><small>Fast and deadly</small></p>
+                    </div>
+                </div>
+            </div>
+            <div class="button-group">
+                <button onclick="createRoom()" class="btn btn-success">Create Room</button>
+                <button onclick="showMenu()" class="btn btn-secondary">Back</button>
+            </div>
+        </div>
+
+        <!-- Join Room Screen -->
+        <div id="joinRoomScreen" class="screen">
+            <h2>Join Game Room</h2>
+            <div class="form-group">
+                <label>Username:</label>
+                <input type="text" id="joinUsername" placeholder="Enter your username" maxlength="20">
+            </div>
+            <div class="form-group">
+                <label>Room ID:</label>
+                <input type="text" id="roomIdInput" placeholder="Enter room ID" maxlength="8">
+            </div>
+            <div class="form-group">
+                <label>Select Character:</label>
+                <div class="character-grid">
+                    <div class="character-card" onclick="selectCharacter('warrior', this)">
+                        <h3>⚔️ Warrior</h3>
+                        <p><strong>Health:</strong> 150</p>
+                        <p><strong>Speed:</strong> 1x</p>
+                        <p><small>Tanky with strong attacks</small></p>
+                    </div>
+                    <div class="character-card" onclick="selectCharacter('mage', this)">
+                        <h3>🔥 Mage</h3>
+                        <p><strong>Health:</strong> 100</p>
+                        <p><strong>Speed:</strong> 1.5x</p>
+                        <p><small>High damage spells</small></p>
+                    </div>
+                    <div class="character-card" onclick="selectCharacter('archer', this)">
+                        <h3>🏹 Archer</h3>
+                        <p><strong>Health:</strong> 120</p>
+                        <p><strong>Speed:</strong> 1.3x</p>
+                        <p><small>Balanced fighter</small></p>
+                    </div>
+                    <div class="character-card" onclick="selectCharacter('rogue', this)">
+                        <h3>🗡️ Rogue</h3>
+                        <p><strong>Health:</strong> 110</p>
+                        <p><strong>Speed:</strong> 2x</p>
+                        <p><small>Fast and deadly</small></p>
+                    </div>
+                </div>
+            </div>
+            <div class="button-group">
+                <button onclick="joinRoom()" class="btn btn-success">Join Room</button>
+                <button onclick="showMenu()" class="btn btn-secondary">Back</button>
+            </div>
+        </div>
+
+        <!-- Waiting Screen -->
+        <div id="waitingScreen" class="screen">
+            <h2>Waiting for Opponent...</h2>
+            <div id="roomInfo" class="info-box">
+                <p><strong>Room ID:</strong> <span id="displayRoomId"></span></p>
+                <p id="playersList"></p>
+            </div>
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Share the Room ID with your friend to join!</p>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="gameScreen" class="screen">
+            <div class="game-header">
+                <div class="player-info">
+                    <h3 id="player1Name"></h3>
+                    <div class="health-bar">
+                        <div id="player1Health" class="health-fill"></div>
+                    </div>
+                    <p id="player1HP"></p>
+                </div>
+                <div class="vs">VS</div>
+                <div class="player-info">
+                    <h3 id="player2Name"></h3>
+                    <div class="health-bar">
+                        <div id="player2Health" class="health-fill"></div>
+                    </div>
+                    <p id="player2HP"></p>
+                </div>
+            </div>
+
+            <div class="battle-area">
+                <div id="battleLog" class="battle-log">
+                    <p class="log-entry">Battle started!</p>
+                </div>
+            </div>
+
+            <div class="abilities-section">
+                <h3>Available Abilities:</h3>
+                <div id="abilitiesContainer" class="abilities-grid"></div>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="gameOverScreen" class="screen">
+            <div id="gameOverContent"></div>
+            <button onclick="returnToMenu()" class="btn btn-primary">Return to Menu</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
